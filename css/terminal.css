@@ -1,0 +1,58 @@
+.terminal{
+	background: #111;
+	box-shadow: 0 0 30px rgba(0,0,0,0.5);
+	border: 1px solid rgb(50,190,50);
+	display: inline-block;
+	height: 400px;
+	max-height: 400px;
+}
+.terminal .header{
+	display: block;
+	background: #333;
+	padding: 5px 15px;
+}
+
+.buttons{
+	float: right;
+}
+.wbutton{
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	border-radius: 32px;
+}
+#close{
+	background: red;
+}
+#max{
+	background: orange;
+}
+#min{
+	background: rgb(50,190,50);
+}
+
+h2{
+	font-family: sans-serif;
+	font-size: 1em;
+	color: #555;
+	display: inline-block;
+}
+
+.content li, p{
+	color: rgb(50,190,50);
+}
+.content p{
+	display: inline-block;
+}
+.content input{
+	width: 700px;
+	background: none;
+	border: none;
+	outline: none;
+	color: rgb(50,190,50);
+	font-size: 1em;
+	font-weight: bold;
+	vertical-align: top;
+	resize: none;
+	margin-top: 3.4px;
+}

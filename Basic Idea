@@ -1,0 +1,8 @@
+Vai fazer:
+
+	- Os processos dos programas não precisam estar juntos;
+	- Vai alocando em linha reta, "normal";
+	- Se um do meio sai, começa a alocar nesse lugar até que da;
+	- Quando acaba o "espaço do meio" e está no meio da alocação, o programa é quebrado sem problemas, continuando na "linha reta";
+	- Caso haja um tempo longo de inatividade de alocação de processos, o software começa a deixar os processos mais perto do "inicio" da memória;
+	- Organiza a ordem dos programas dando preferência aos mais utilizados no momento;
