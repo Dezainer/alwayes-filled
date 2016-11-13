@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import $ from 'jquery';
+
 class Terminal extends React.Component{
 	constructor(props, context){
 		super(props, context);
@@ -12,14 +14,10 @@ class Terminal extends React.Component{
 
 	render(){
 
-		var History = this.state.history.map(function (hist) {
+		var History = this.state.history.map(function (hist, i) {
 			if(hist != ""){
 				return(
-					<div className="history">
-						<ul>
-							<li>{hist}</li>
-						</ul>
-					</div>
+					<li key={i}>{hist}</li>
 				);
 			}
 		});
@@ -35,18 +33,46 @@ class Terminal extends React.Component{
 					</div>
 				</div>
 				<div className="content">
-					{History}
+					<div className="history">
+						<ul>
+							{History}
+						</ul>
+					</div>
 					<div className="input">
 						<p>user@pc:~$</p>
-						<input name="input" onKeyPress={() => this.call(event)}></input>
+						<input name="input" onKeyUp={this.command.bind(this)}></input>
 					</div>
 				</div>
 			</div>
 		);
 	}
 
-	call(event){
-		console.log(event.wich);
+	command(event){
+		if(event.keyCode == 13){
+			var history = this.state.history;
+			var command = event.target.value;
+
+			history.push(command);
+			this.setState({history: history});
+			
+			event.target.value = "";
+			
+			try {
+				eval('this.'+command+'()');
+			}
+			catch(err){
+				var history = this.state.history;
+
+				var log = ("Command: "+command+" not found");
+				history.push(log);
+
+				this.setState({history: history});
+			}
+		}
+	}
+
+	clear(){
+		this.setState({history: []});
 	}
 }
 
