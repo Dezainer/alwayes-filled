@@ -4,6 +4,7 @@ module.exports = {
   entry: [
           './core/alloc.js',
           './components/terminal.js',
+          './actions/jquery-ui.min.js',
           './actions/actions.js'
   ],
   output: { path: __dirname, filename: './public/bundle.js' },

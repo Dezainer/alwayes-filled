@@ -6,22 +6,22 @@ class Terminal extends React.Component{
 		super(props, context);
 
 		this.state = {
-			history:[
-				"Bem-vindo! Para iniciar um novo programa, execute a função - criar(nome,tamanho)"
-			]
+			history:[]
 		}
 	}
 
 	render(){
 
 		var History = this.state.history.map(function (hist) {
-			return(
-				<div className="history">
-					<ul>
-						<li>{hist}</li>
-					</ul>
-				</div>
-			);
+			if(hist != ""){
+				return(
+					<div className="history">
+						<ul>
+							<li>{hist}</li>
+						</ul>
+					</div>
+				);
+			}
 		});
 
 		return(
@@ -38,11 +38,15 @@ class Terminal extends React.Component{
 					{History}
 					<div className="input">
 						<p>user@pc:~$</p>
-						<input name="input"></input>
+						<input name="input" onKeyPress={() => this.call(event)}></input>
 					</div>
 				</div>
 			</div>
 		);
+	}
+
+	call(event){
+		console.log(event.wich);
 	}
 }
 
