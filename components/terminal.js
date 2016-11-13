@@ -53,21 +53,22 @@ class Terminal extends React.Component{
 			var command = event.target.value;
 
 			history.push(command);
-			this.setState({history: history});
-			
 			event.target.value = "";
 			
-			try {
-				eval('this.'+command+'()');
+			if(command != ""){
+				try {
+					eval('this.'+command+'()');
+					history = [];
+				}
+				catch(err){
+					var log = ("Command: "+command+" not found");
+					history.push(log);
+				}
+			}else{
+				history.push('user@pc:~$');
 			}
-			catch(err){
-				var history = this.state.history;
 
-				var log = ("Command: "+command+" not found");
-				history.push(log);
-
-				this.setState({history: history});
-			}
+			this.setState({history: history});
 		}
 	}
 
