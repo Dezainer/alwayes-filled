@@ -56,6 +56,118 @@
 
 	"use strict";
 
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.alloc = alloc;
+	exports.dealloc = dealloc;
+	exports.getNextEmpety = getNextEmpety;
+	//Basic
+	var memory = new Array(379);
+	var posit = 0;
+	var sOrder = 1;
+
+	for (var i = 0; i < memory.length; i++) {
+		memory[i] = "-";
+	}
+
+	//
+
+	function alloc(size) {
+
+		var length = size;
+
+		for (var i = posit; i < length + posit; i++) {
+			if (memory[i] == "-") {
+				memory[i] = sOrder;
+			} else {
+				getNextEmpety();
+				length -= i - 1;
+			}
+		}
+
+		posit += length;
+		sOrder++;
+	}
+
+	//
+
+	function dealloc(id) {
+
+		var first = true;
+
+		for (var i = 0; i < memory.length - 1; i++) {
+			if (memory[i] == id) {
+
+				if (first) {
+					posit = i;
+					first = false;
+				}
+
+				memory[i] = "-";
+			}
+		}
+	}
+
+	//
+
+	function getNextEmpety() {
+		for (var j = 0; j < memory.length; j++) {
+			if (memory[j] == "-") {
+				posit = j;
+				return;
+			}
+		}
+	}
+
+	//
+	console.log(posit);
+
+	alloc(1);
+	console.log(memory);
+	console.log('-------------------');
+	console.log(posit);
+
+	alloc(2);
+	console.log(memory);
+	console.log('-------------------');
+	console.log(posit);
+
+	alloc(1);
+	console.log(memory);
+	console.log('-------------------');
+	console.log(posit);
+
+	dealloc(2);
+	console.log(memory);
+	console.log('-------------------');
+	console.log(posit);
+
+	alloc(4);
+	console.log(memory);
+	console.log('-------------------');
+	console.log(posit);
+
+	alloc(2);
+	console.log(memory);
+	console.log('-------------------');
+	console.log(posit);
+
+	alloc(2);
+	console.log(memory);
+	console.log('-------------------');
+	console.log(posit);
+
+	dealloc(5);
+	console.log(memory);
+	console.log('-------------------');
+	console.log(posit);
+
+	alloc(4);
+	console.log(memory);
+	console.log('-------------------');
+	console.log(posit);
+
 /***/ },
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
@@ -126,9 +238,9 @@
 						_react2.default.createElement(
 							'div',
 							{ className: 'buttons' },
-							_react2.default.createElement('div', { className: 'wbutton', id: 'close' }),
+							_react2.default.createElement('div', { className: 'wbutton', id: 'min' }),
 							_react2.default.createElement('div', { className: 'wbutton', id: 'max' }),
-							_react2.default.createElement('div', { className: 'wbutton', id: 'min' })
+							_react2.default.createElement('div', { className: 'wbutton', id: 'close' })
 						)
 					),
 					_react2.default.createElement(
@@ -168,7 +280,7 @@
 
 					if (command != "") {
 						try {
-							eval('this.' + command + '()');
+							eval('this.' + command);
 							history = [];
 						} catch (err) {
 							var log = "Command: " + command + " not found";

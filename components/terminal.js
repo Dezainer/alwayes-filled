@@ -27,9 +27,9 @@ class Terminal extends React.Component{
 				<div className="header">
 					<h2>Terminal</h2>
 					<div className="buttons">
-						<div className="wbutton" id="close"></div>
-						<div className="wbutton" id="max"></div>
 						<div className="wbutton" id="min"></div>
+						<div className="wbutton" id="max"></div>
+						<div className="wbutton" id="close"></div>
 					</div>
 				</div>
 				<div className="content">
@@ -57,8 +57,8 @@ class Terminal extends React.Component{
 			
 			if(command != ""){
 				try {
-					eval('this.'+command+'()');
-					history = [];
+					eval('this.'+command);
+					history = [];	
 				}
 				catch(err){
 					var log = ("Command: "+command+" not found");
