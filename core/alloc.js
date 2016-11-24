@@ -11,18 +11,19 @@ for (var i = 0; i < memory.length; i++) {
 
 export function alloc(size) {
 
-	var length = size;
+	let length = size;
 
-	for (var i = posit; i < length + posit; i++) {
-		if(memory[i] == "-"){
-			memory[i] = sOrder;
+	for (var i = posit; i <= length + posit; i++) {
+		if(memory[i] != "-"){
+			getNextEmpety();
 		}else{
 			getNextEmpety();
-			length -= (i - 1);
+			memory[i] = sOrder;
+			length--;
 		}
 	}
-	
-	posit += length;
+
+	getNextEmpety();
 	sOrder++;
 }
 
@@ -43,6 +44,8 @@ export function dealloc(id) {
 			memory[i] = "-";
 		}
 	}
+
+	getNextEmpety();
 }
 
 //
@@ -57,49 +60,67 @@ export function getNextEmpety() {
 }
 
 //
-console.log(posit);
 
 alloc(1);
 console.log(memory);
 console.log('-------------------');
-console.log(posit);
 
 alloc(2);
 console.log(memory);
 console.log('-------------------');
-console.log(posit);
 
 alloc(1);
 console.log(memory);
 console.log('-------------------');
-console.log(posit);
 
 dealloc(2);
 console.log(memory);
 console.log('-------------------');
-console.log(posit);
 
 alloc(4);
 console.log(memory);
 console.log('-------------------');
-console.log(posit);
 
 alloc(2);
 console.log(memory);
 console.log('-------------------');
-console.log(posit);
 
 alloc(2);
 console.log(memory);
 console.log('-------------------');
-console.log(posit);
 
 dealloc(5);
 console.log(memory);
 console.log('-------------------');
-console.log(posit);
 
 alloc(4);
 console.log(memory);
 console.log('-------------------');
-console.log(posit);
+
+alloc(2);
+console.log(memory);
+console.log('-------------------');
+
+alloc(1);
+console.log(memory);
+console.log('-------------------');
+
+dealloc(8);
+console.log(memory);
+console.log('-------------------');
+
+alloc(3);
+console.log(memory);
+console.log('-------------------');
+
+dealloc(4);
+console.log(memory);
+console.log('-------------------');
+
+alloc(3);
+console.log(memory);
+console.log('-------------------');
+
+alloc(2);
+console.log(memory);
+console.log('-------------------');
