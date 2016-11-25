@@ -64,7 +64,7 @@
 	exports.dealloc = dealloc;
 	exports.getNextEmpety = getNextEmpety;
 	exports.route = route;
-	exports.initiate = initiate;
+	exports.getMemory = getMemory;
 	//Basic
 
 	var memory = new Array(379);
@@ -156,7 +156,7 @@
 	//Actions
 
 	//Operations
-	var open = [50, 15, 25, 18, 60, 4, 19, 33, 119, 17];
+	var open = exports.open = [50, 15, 25, 18, 60, 4, 19, 33, 119, 17];
 
 	function route() {
 		alloc(10);
@@ -169,29 +169,9 @@
 		return memory;
 	}
 
-	function initiate() {
-		for (var i = 7; i < open.length + 7; i++) {
+	//
 
-			if (i == 11) {
-				dealloc(9);
-				alert('Processo 9 desalocado');
-			} else if (i == 15) {
-				dealloc(11);
-				alert('Processo 11 desalocado');
-			}
-
-			var result = alloc(open[i - 7]);
-
-			if (!result) {
-				alert('Processo muito grande para ser alocado, tamanho: ' + open[i - 7] + '. Disponível: ' + (memory.length - all));
-			} else {
-				alert('Processo ' + i + ' foi alocado, tamanho: ' + open[i - 7]);
-			}
-		}
-
-		alloc(25);
-		alert('Processo 9 foi realocado como: ' + (sOrder - 1));
-
+	function getMemory() {
 		return memory;
 	}
 
@@ -300,7 +280,9 @@
 			space = (0, _alloc.route)();
 
 			_this.state = {
-				memory: space
+				memory: space,
+				order: 7,
+				deas: 0
 			};
 			return _this;
 		}
@@ -308,7 +290,31 @@
 		_createClass(Memory, [{
 			key: 'course',
 			value: function course() {
-				this.setState({ memory: (0, _alloc.initiate)() });
+				var i = this.state.order;
+				console.log(i);
+
+				if (i < 17) {
+					if (i == 11 && this.state.deas != 1) {
+						(0, _alloc.dealloc)(9);
+						i--;
+						this.setState({ deas: 1 });
+					} else if (i == 15 && this.state.deas != 2) {
+						(0, _alloc.dealloc)(11);
+						i--;
+						this.setState({ deas: 2 });
+					} else {
+						var result = (0, _alloc.alloc)(_alloc.open[i - 7]);
+						this.setState({ memory: (0, _alloc.getMemory)() });
+					}
+				} else if (i == 17) {
+					(0, _alloc.alloc)(25);
+					this.setState({ memory: (0, _alloc.getMemory)() });
+				} else {
+					alert('acabou');
+				}
+
+				i++;
+				this.setState({ order: i });
 			}
 		}, {
 			key: 'render',

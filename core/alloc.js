@@ -90,7 +90,7 @@ export function getNextEmpety() {
 //Actions
 
 	//Operations
-	var open = [50,15,25,18,60,4,19,33,119,17];
+	export var open = [50,15,25,18,60,4,19,33,119,17];
 
 export function route() {
 	alloc(10);
@@ -103,29 +103,9 @@ export function route() {
 	return memory;
 }
 
-export function initiate() {
-	for (var i = 7; i < open.length + 7; i++) {
+//
 
-		if(i == 11){
-			dealloc(9);
-			alert('Processo 9 desalocado');
-		}else if (i == 15){
-			dealloc(11);
-			alert('Processo 11 desalocado');
-		}
-
-		var result = alloc(open[i - 7]);
-
-		if(!result){
-			alert('Processo muito grande para ser alocado, tamanho: '+open[i - 7]+'. Disponível: '+(memory.length - all));
-		}else{
-			alert('Processo '+i+' foi alocado, tamanho: '+open[i - 7]);
-		}
-	}
-
-	alloc(25);
-	alert('Processo 9 foi realocado como: '+(sOrder - 1));
-
+export function getMemory(){
 	return memory;
 }
 
