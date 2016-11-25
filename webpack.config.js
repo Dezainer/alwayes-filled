@@ -3,6 +3,7 @@ var webpack = require('webpack');
 module.exports = {
   entry: [
           './core/alloc.js',
+          './components/memory.js',
           './components/terminal.js',
           './actions/jquery-ui.min.js',
           './actions/actions.js'

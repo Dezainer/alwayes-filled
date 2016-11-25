@@ -1,0 +1,12 @@
+.memory ul{
+	list-style: none;
+	padding: 2px;
+}
+.memory li{
+	display: inline-block;
+	color: white;
+	padding: 15px;
+	margin: 2px;
+	background: rgba(0,0,0,0.3);
+	font-size: 0.7em;
+}

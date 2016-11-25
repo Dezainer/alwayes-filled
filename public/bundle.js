@@ -46,8 +46,9 @@
 
 	__webpack_require__(1);
 	__webpack_require__(2);
-	__webpack_require__(175);
-	module.exports = __webpack_require__(176);
+	__webpack_require__(174);
+	__webpack_require__(176);
+	module.exports = __webpack_require__(177);
 
 
 /***/ },
@@ -62,38 +63,65 @@
 	exports.alloc = alloc;
 	exports.dealloc = dealloc;
 	exports.getNextEmpety = getNextEmpety;
+	exports.route = route;
+	exports.initiate = initiate;
 	//Basic
+
 	var memory = new Array(379);
-	var posit = 0;
-	var sOrder = 1;
 
 	for (var i = 0; i < memory.length; i++) {
-		memory[i] = "-";
+		memory[i] = "||";
 	}
+
+	var posit = 0;
+	var sOrder = 1;
+	var all = 0;
 
 	//
 
 	function alloc(size) {
-
 		var length = size;
+		all += size;
 
-		for (var i = posit; i <= length + posit; i++) {
-			if (memory[i] != "-") {
-				getNextEmpety();
-			} else {
-				getNextEmpety();
-				memory[i] = sOrder;
-				length--;
+		if (all <= 379) {
+			for (var i = posit; i <= length + posit; i++) {
+				if (memory[i] != "||") {
+					getNextEmpety();
+				} else {
+					getNextEmpety();
+					if (sOrder < 10) {
+						memory[i] = '0' + sOrder;
+					} else {
+						memory[i] = sOrder;
+					}
+					length--;
+				}
 			}
+		} else {
+			all -= size;
+			sOrder++;
+			return false;
 		}
 
 		getNextEmpety();
 		sOrder++;
+
+		return memory;
 	}
 
 	//
 
 	function dealloc(id) {
+
+		var thisOne = 0;
+
+		for (var i = 0; i < memory.length; i++) {
+			if (memory[i] == id) {
+				thisOne++;
+			}
+		}
+
+		all -= thisOne;
 
 		var first = true;
 
@@ -105,18 +133,18 @@
 					first = false;
 				}
 
-				memory[i] = "-";
+				memory[i] = "||";
 			}
 		}
 
-		getNextEmpety();
+		return memory;
 	}
 
 	//
 
 	function getNextEmpety() {
 		for (var j = 0; j < memory.length; j++) {
-			if (memory[j] == "-") {
+			if (memory[j] == "||") {
 				posit = j;
 				return;
 			}
@@ -125,69 +153,114 @@
 
 	//
 
-	alloc(1);
-	console.log(memory);
-	console.log('-------------------');
+	//Actions
 
-	alloc(2);
-	console.log(memory);
-	console.log('-------------------');
+	//Operations
+	var open = [50, 15, 25, 18, 60, 4, 19, 33, 119, 17];
 
-	alloc(1);
-	console.log(memory);
-	console.log('-------------------');
+	function route() {
+		alloc(10);
+		alloc(10);
+		alloc(10);
+		alloc(10);
+		alloc(10);
+		alloc(29);
 
-	dealloc(2);
-	console.log(memory);
-	console.log('-------------------');
+		return memory;
+	}
 
-	alloc(4);
-	console.log(memory);
-	console.log('-------------------');
+	function initiate() {
+		for (var i = 7; i < open.length + 7; i++) {
 
-	alloc(2);
-	console.log(memory);
-	console.log('-------------------');
+			if (i == 11) {
+				dealloc(9);
+				alert('Processo 9 desalocado');
+			} else if (i == 15) {
+				dealloc(11);
+				alert('Processo 11 desalocado');
+			}
 
-	alloc(2);
-	console.log(memory);
-	console.log('-------------------');
+			var result = alloc(open[i - 7]);
 
-	dealloc(5);
-	console.log(memory);
-	console.log('-------------------');
+			if (!result) {
+				alert('Processo muito grande para ser alocado, tamanho: ' + open[i - 7] + '. Disponível: ' + (memory.length - all));
+			} else {
+				alert('Processo ' + i + ' foi alocado, tamanho: ' + open[i - 7]);
+			}
+		}
 
-	alloc(4);
-	console.log(memory);
-	console.log('-------------------');
+		alloc(25);
+		alert('Processo 9 foi realocado como: ' + (sOrder - 1));
 
-	alloc(2);
-	console.log(memory);
-	console.log('-------------------');
+		return memory;
+	}
 
-	alloc(1);
-	console.log(memory);
-	console.log('-------------------');
+	//
 
-	dealloc(8);
-	console.log(memory);
-	console.log('-------------------');
+	//Tests
+	// alloc(1);
+	// console.log(memory);
+	// console.log('-------------------');
 
-	alloc(3);
-	console.log(memory);
-	console.log('-------------------');
+	// alloc(2);
+	// console.log(memory);
+	// console.log('-------------------');
 
-	dealloc(4);
-	console.log(memory);
-	console.log('-------------------');
+	// alloc(1);
+	// console.log(memory);
+	// console.log('-------------------');
 
-	alloc(3);
-	console.log(memory);
-	console.log('-------------------');
+	// dealloc(2);
+	// console.log(memory);
+	// console.log('-------------------');
 
-	alloc(2);
-	console.log(memory);
-	console.log('-------------------');
+	// alloc(4);
+	// console.log(memory);
+	// console.log('-------------------');
+
+	// alloc(2);
+	// console.log(memory);
+	// console.log('-------------------');
+
+	// alloc(2);
+	// console.log(memory);
+	// console.log('-------------------');
+
+	// dealloc(5);
+	// console.log(memory);
+	// console.log('-------------------');
+
+	// alloc(4);
+	// console.log(memory);
+	// console.log('-------------------');
+
+	// alloc(2);
+	// console.log(memory);
+	// console.log('-------------------');
+
+	// alloc(1);
+	// console.log(memory);
+	// console.log('-------------------');
+
+	// dealloc(8);
+	// console.log(memory);
+	// console.log('-------------------');
+
+	// alloc(3);
+	// console.log(memory);
+	// console.log('-------------------');
+
+	// dealloc(4);
+	// console.log(memory);
+	// console.log('-------------------');
+
+	// alloc(3);
+	// console.log(memory);
+	// console.log('-------------------');
+
+	// alloc(2);
+	// console.log(memory);
+	// console.log('-------------------');
 
 /***/ },
 /* 2 */
@@ -205,9 +278,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _jquery = __webpack_require__(174);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
+	var _alloc = __webpack_require__(1);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -217,114 +288,68 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Terminal = function (_React$Component) {
-		_inherits(Terminal, _React$Component);
+	var Memory = function (_React$Component) {
+		_inherits(Memory, _React$Component);
 
-		function Terminal(props, context) {
-			_classCallCheck(this, Terminal);
+		function Memory(props, context) {
+			_classCallCheck(this, Memory);
 
-			var _this = _possibleConstructorReturn(this, (Terminal.__proto__ || Object.getPrototypeOf(Terminal)).call(this, props, context));
+			var _this = _possibleConstructorReturn(this, (Memory.__proto__ || Object.getPrototypeOf(Memory)).call(this, props, context));
+
+			var space = new Array(379);
+			space = (0, _alloc.route)();
 
 			_this.state = {
-				history: []
+				memory: space
 			};
 			return _this;
 		}
 
-		_createClass(Terminal, [{
+		_createClass(Memory, [{
+			key: 'course',
+			value: function course() {
+				this.setState({ memory: (0, _alloc.initiate)() });
+			}
+		}, {
 			key: 'render',
 			value: function render() {
+				var _this2 = this;
 
-				var History = this.state.history.map(function (hist, i) {
-					if (hist != "") {
-						return _react2.default.createElement(
-							'li',
-							{ key: i },
-							hist
-						);
-					}
+				var spaces = this.state.memory.map(function (m, index) {
+					return _react2.default.createElement(
+						'li',
+						{ key: index },
+						m
+					);
 				});
 
 				return _react2.default.createElement(
 					'div',
-					{ className: 'terminal' },
+					null,
 					_react2.default.createElement(
 						'div',
-						{ className: 'header' },
+						{ className: 'memory' },
 						_react2.default.createElement(
-							'h2',
+							'ul',
 							null,
-							'Terminal'
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'buttons' },
-							_react2.default.createElement('div', { className: 'wbutton', id: 'min' }),
-							_react2.default.createElement('div', { className: 'wbutton', id: 'max' }),
-							_react2.default.createElement('div', { className: 'wbutton', id: 'close' })
+							spaces
 						)
 					),
 					_react2.default.createElement(
-						'div',
-						{ className: 'content' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'history' },
-							_react2.default.createElement(
-								'ul',
-								null,
-								History
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'input' },
-							_react2.default.createElement(
-								'p',
-								null,
-								'user@pc:~$'
-							),
-							_react2.default.createElement('input', { name: 'input', onKeyUp: this.command.bind(this) })
-						)
+						'button',
+						{ onClick: function onClick() {
+								return _this2.course();
+							} },
+						'Iniciar'
 					)
 				);
 			}
-		}, {
-			key: 'command',
-			value: function command(event) {
-				if (event.keyCode == 13) {
-					var history = this.state.history;
-					var command = event.target.value;
-
-					history.push(command);
-					event.target.value = "";
-
-					if (command != "") {
-						try {
-							eval('this.' + command);
-							history = [];
-						} catch (err) {
-							var log = "Command: " + command + " not found";
-							history.push(log);
-						}
-					} else {
-						history.push('user@pc:~$');
-					}
-
-					this.setState({ history: history });
-				}
-			}
-		}, {
-			key: 'clear',
-			value: function clear() {
-				this.setState({ history: [] });
-			}
 		}]);
 
-		return Terminal;
+		return Memory;
 	}(_react2.default.Component);
 
-	_reactDom2.default.render(_react2.default.createElement(Terminal, null), document.getElementById('terminal'));
+	_reactDom2.default.render(_react2.default.createElement(Memory, null), document.getElementById('memory'));
 
 /***/ },
 /* 3 */
@@ -21697,6 +21722,148 @@
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(3);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(36);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _jquery = __webpack_require__(175);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _memory = __webpack_require__(2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Terminal = function (_React$Component) {
+		_inherits(Terminal, _React$Component);
+
+		function Terminal(props, context) {
+			_classCallCheck(this, Terminal);
+
+			var _this = _possibleConstructorReturn(this, (Terminal.__proto__ || Object.getPrototypeOf(Terminal)).call(this, props, context));
+
+			_this.state = {
+				history: []
+			};
+			return _this;
+		}
+
+		_createClass(Terminal, [{
+			key: 'render',
+			value: function render() {
+
+				var History = this.state.history.map(function (hist, i) {
+					if (hist != "") {
+						return _react2.default.createElement(
+							'li',
+							{ key: i },
+							hist
+						);
+					}
+				});
+
+				return _react2.default.createElement(
+					'div',
+					{ className: 'terminal' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'header' },
+						_react2.default.createElement(
+							'h2',
+							null,
+							'Terminal'
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'buttons' },
+							_react2.default.createElement('div', { className: 'wbutton', id: 'min' }),
+							_react2.default.createElement('div', { className: 'wbutton', id: 'max' }),
+							_react2.default.createElement('div', { className: 'wbutton', id: 'close' })
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'content' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'history' },
+							_react2.default.createElement(
+								'ul',
+								null,
+								History
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'input' },
+							_react2.default.createElement(
+								'p',
+								null,
+								'user@pc:~$'
+							),
+							_react2.default.createElement('input', { name: 'input', onKeyUp: this.command.bind(this) })
+						)
+					)
+				);
+			}
+		}, {
+			key: 'command',
+			value: function command(event) {
+				if (event.keyCode == 13) {
+					var history = this.state.history;
+					var command = event.target.value;
+
+					history.push(command);
+					event.target.value = "";
+
+					if (command != "") {
+						try {
+							eval(command);
+							history = [];
+						} catch (err) {
+							var log = "Command: " + command + " not found";
+							history.push(log);
+						}
+					} else {
+						history.push('user@pc:~$');
+					}
+
+					this.setState({ history: history });
+				}
+			}
+		}, {
+			key: 'clear',
+			value: function clear() {
+				this.setState({ history: [] });
+			}
+		}]);
+
+		return Terminal;
+	}(_react2.default.Component);
+
+	// ReactDOM.render(
+	// 	<Terminal/>,
+	// 	document.getElementById('terminal')	
+	// );
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	 * jQuery JavaScript Library v3.1.1
 	 * https://jquery.com/
@@ -31920,7 +32087,7 @@
 
 
 /***/ },
-/* 175 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;"use strict";
@@ -31931,7 +32098,7 @@
 	* Copyright jQuery Foundation and other contributors; Licensed MIT */
 
 	(function (t) {
-	   true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(174)], __WEBPACK_AMD_DEFINE_FACTORY__ = (t), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : t(jQuery);
+	   true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(175)], __WEBPACK_AMD_DEFINE_FACTORY__ = (t), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : t(jQuery);
 	})(function (t) {
 	  t.ui = t.ui || {}, t.ui.version = "1.12.1";var e = 0,
 	      i = Array.prototype.slice;t.cleanData = function (e) {
@@ -32311,12 +32478,12 @@
 	});
 
 /***/ },
-/* 176 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _jquery = __webpack_require__(174);
+	var _jquery = __webpack_require__(175);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
