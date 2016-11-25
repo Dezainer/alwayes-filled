@@ -100,12 +100,14 @@
 		} else {
 			all -= size;
 			sOrder++;
+			alert('esta cheio');
 			return false;
 		}
 
 		getNextEmpety();
 		sOrder++;
 
+		console.log(memory);
 		return memory;
 	}
 
@@ -156,7 +158,7 @@
 	//Actions
 
 	//Operations
-	var open = exports.open = [50, 15, 25, 18, 60, 4, 19, 33, 119, 17];
+	var open = exports.open = [250, 15, 25, 18, 60, 4, 19, 33, 119, 17];
 
 	function route() {
 		alloc(10);
@@ -291,7 +293,6 @@
 			key: 'course',
 			value: function course() {
 				var i = this.state.order;
-				console.log(i);
 
 				if (i < 17) {
 					if (i == 11 && this.state.deas != 1) {
@@ -308,6 +309,7 @@
 					}
 				} else if (i == 17) {
 					(0, _alloc.alloc)(25);
+					console.log('O 9 abriu como 17');
 					this.setState({ memory: (0, _alloc.getMemory)() });
 				} else {
 					alert('acabou');
@@ -346,7 +348,7 @@
 						{ onClick: function onClick() {
 								return _this2.course();
 							} },
-						'Iniciar'
+						'Avan\xE7ar'
 					)
 				);
 			}
@@ -21744,7 +21746,7 @@
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _memory = __webpack_require__(2);
+	var _alloc = __webpack_require__(1);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21861,10 +21863,7 @@
 		return Terminal;
 	}(_react2.default.Component);
 
-	// ReactDOM.render(
-	// 	<Terminal/>,
-	// 	document.getElementById('terminal')	
-	// );
+	_reactDom2.default.render(_react2.default.createElement(Terminal, null), document.getElementById('terminal'));
 
 /***/ },
 /* 175 */

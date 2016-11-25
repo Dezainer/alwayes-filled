@@ -19,7 +19,6 @@ class Memory extends React.Component{
 
 	course(){
 		var i = this.state.order;
-		console.log(i);
 
 		if(i < 17){
 			if(i == 11 && this.state.deas != 1){
@@ -37,6 +36,7 @@ class Memory extends React.Component{
 
 		}else if(i == 17){
 			alloc(25);
+			console.log('O 9 abriu como 17');
 			this.setState({memory: getMemory()});
 		}else{
 			alert('acabou');
@@ -61,7 +61,7 @@ class Memory extends React.Component{
 						{spaces}
 					</ul>
 				</div>
-				<button onClick={() => this.course()}>Iniciar</button>
+				<button onClick={() => this.course()}>Avançar</button>
 			</div>
 		);
 	}

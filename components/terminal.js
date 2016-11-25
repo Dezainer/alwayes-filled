@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import $ from 'jquery';
-import {in} from '../components/memory';
+import {alloc, dealloc} from '../core/alloc';
 
 class Terminal extends React.Component{
 	constructor(props, context){
@@ -78,7 +78,7 @@ class Terminal extends React.Component{
 	}
 }
 
-// ReactDOM.render(
-// 	<Terminal/>,
-// 	document.getElementById('terminal')	
-// );
+ReactDOM.render(
+	<Terminal/>,
+	document.getElementById('terminal')	
+);

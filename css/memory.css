@@ -10,3 +10,19 @@
 	background: rgba(0,0,0,0.3);
 	font-size: 0.7em;
 }
+
+button{
+	margin-top: 30px;
+	padding: 20px 500px;
+	background: rgba(255,255,255,0.5);
+	border: none;
+	outline: none;
+	font-size: 1em;
+	font-weight: bold;
+	transition: all 0.3s ease-in-out;
+	cursor: pointer;
+}
+button:hover{
+	transform: scale(1.05);
+	box-shadow: 0 0 50px rgba(0,0,0,0.7);
+}

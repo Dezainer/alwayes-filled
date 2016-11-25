@@ -33,6 +33,7 @@ export function alloc(size) {
 	}else{
 		all -= size;
 		sOrder++;
+		alert('esta cheio');
 		return false;
 	}
 	
@@ -40,6 +41,7 @@ export function alloc(size) {
 	getNextEmpety();
 	sOrder++;
 
+	console.log(memory);
 	return memory;
 }
 
@@ -90,7 +92,7 @@ export function getNextEmpety() {
 //Actions
 
 	//Operations
-	export var open = [50,15,25,18,60,4,19,33,119,17];
+	export var open = [250,15,25,18,60,4,19,33,119,17];
 
 export function route() {
 	alloc(10);
